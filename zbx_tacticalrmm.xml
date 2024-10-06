@@ -1,0 +1,635 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>7.0</version>
+    <template_groups>
+        <template_group>
+            <uuid>76afd6416b304c5dae58a096bc38cf2a</uuid>
+            <name>DFWare Templates</name>
+        </template_group>
+    </template_groups>
+    <templates>
+        <template>
+            <uuid>a2a9e5f14caa4570af263109a21630bc</uuid>
+            <template>TacticalRMM Health</template>
+            <name>TacticalRMM Health</name>
+            <description>The template checks health of TacticalRMM.</description>
+            <vendor>
+                <name>DFWare di Di Feo Pasquale</name>
+            <version>0.0.1</version>
+            </vendor>
+            <groups>
+                <group>
+                    <name>DFWare Templates</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>b4f06d76a810406d9d1a737273279b14</uuid>
+                    <name>TacticalRMM agent count</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.agent_count</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.agent_count</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                </item>
+                <item>
+                    <uuid>415271d630a74e8da100f39ecd87bf62</uuid>
+                    <name>TacticalRMM celerybeat  running</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.celerybeat_running</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.services_running.celerybeat</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>cbd41057c01b4bde84db6aa195ee9168</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.celerybeat_running,#1)=&quot;false&quot;</expression>
+                            <name>Celerybeat not running</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>118d1e46878f44a8835f56fcfa6cb46c</uuid>
+                    <name>TacticalRMM celery running</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.celery_running</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.services_running.celery</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>bfae9b35af414fc18b3b4e61cef39d78</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.celery_running,#1)=&quot;false&quot;</expression>
+                            <name>Celery not running</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>fb44ffe51bc842afb34068e9b132e8b9</uuid>
+                    <name>TacticalRMM cert expired</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.cert_expired</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.cert_expired</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>ba40fbadc70f4c5ead08d66d3470b4dc</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.cert_expired,#1)=&quot;true&quot;</expression>
+                            <name>Cert expired</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>7f86a5aae2d0498c8c98a87fc1bd32b0</uuid>
+                    <name>TacticalRMM client_count</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.client_count</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.client_count</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>37308b86c64b4b44ad967a3f4a002add</uuid>
+                            <expression>change(/TacticalRMM Health/tacticalrmm.client_count)&lt;&gt;0</expression>
+                            <name>Clients changed</name>
+                            <priority>INFO</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>187e890e4c03454d8d85abf7b4d0e5be</uuid>
+                    <name>TacticalRMM days until cert expires</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.days_until_cert_expires</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.days_until_cert_expires</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                </item>
+                <item>
+                    <uuid>845723cdc7c942f38ce4bd9fc4a5f172</uuid>
+                    <name>TacticalRMM disk usage percent</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.disk_usage_percent</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.disk_usage_percent</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>514bbad56f534d53b44cdb897e8fb8df</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.disk_usage_percent,#3)&gt;85</expression>
+                            <name>Disk usage percent</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                        <trigger>
+                            <uuid>eac5d6e029c0499baba17107f609d501</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.disk_usage_percent,#3)&gt;75</expression>
+                            <name>Disk usage percent warning</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>511d1badd4844c65b48d72417febb81e</uuid>
+                    <name>TacticalRMM django running</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.django_running</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.services_running.django</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>6dbbed80910a4610910f874a227ec089</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.django_running,#1)=&quot;false&quot;</expression>
+                            <name>Django not running</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>8004d2f698ad44898470e45013ffef68</uuid>
+                    <name>TacticalRMM latest agent version</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.latest_agent_version</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.latest_agent_version</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>d5bb4705b9854aa5a1913d66b34a9860</uuid>
+                            <expression>change(/TacticalRMM Health/tacticalrmm.latest_agent_version)&lt;&gt;0</expression>
+                            <name>Agent version changed</name>
+                            <priority>INFO</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>87c0cce6d69a453cad945e36a2559fac</uuid>
+                    <name>TacticalRMM mem usage percent</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.mem_usage_percent</key>
+                    <delay>0</delay>
+                    <value_type>FLOAT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.mem_usage_percent</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>ba1523b03d874e0388545e04db445d12</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.mem_usage_percent,#3)&gt;85</expression>
+                            <name>Mem usage percent</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                        <trigger>
+                            <uuid>11d645599f144a48850de84175dc6be5</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.mem_usage_percent,#3)&gt;75</expression>
+                            <name>Mem usage percent warning</name>
+                            <priority>WARNING</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>24d8783663b84820995c8cae6ac609c5</uuid>
+                    <name>TacticalRMM mesh running</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.mesh_running</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.services_running.mesh</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>ec32943e45de45f9bad8e71c73654af9</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.mesh_running,#1)=&quot;false&quot;</expression>
+                            <name>Mesh not running</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>8525cb31792e4582b5977ee558cabc6a</uuid>
+                    <name>TacticalRMM mongo running</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.mongo_running</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.services_running.mongo</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                </item>
+                <item>
+                    <uuid>712346575a82488195df7ff39a8cf585</uuid>
+                    <name>TacticalRMM nats-api running</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.natsapi_running</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>STR_REPLACE</type>
+                            <parameters>
+                                <parameter>nats-api</parameter>
+                                <parameter>nats_api</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.services_running.nats_api</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>dfe2e31d6ef74a85962776b5834a8e16</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.natsapi_running,#1)=&quot;false&quot;</expression>
+                            <name>nats-api not running</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>f452e634e9814041aed2f0fe95e3151d</uuid>
+                    <name>TacticalRMM nats running</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.nats_running</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.services_running.nats</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>1ec137d372be41b0a429ba72cbceb2a4</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.nats_running,#1)=&quot;false&quot;</expression>
+                            <name>nats not running</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>9134389cf8fb48469205a76487ca9063</uuid>
+                    <name>TacticalRMM nginx running</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.nginx_running</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.services_running.nginx</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>e29f9b5080ad4893910c437746868af7</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.nginx_running,#1)=&quot;false&quot;</expression>
+                            <name>Nginx not running</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>e17ed580f24d4f56884eb4999ebef84a</uuid>
+                    <name>TacticalRMM postgres running</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.postgres_running</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.services_running.postgres</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>f49599c3637344e1a609e2942e088547</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.postgres_running,#1)=&quot;false&quot;</expression>
+                            <name>Postgres not running</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>0c68e1d1147046b3be2e9547ff29ebe8</uuid>
+                    <name>TacticalRMM redis ping</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.redis_ping</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.redis_ping</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>16c17acbeac24c359782ebc1d1ee1816</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.redis_ping,#1)=&quot;false&quot;</expression>
+                            <name>Redis not pinged</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>dd5031f0077d4da6ad83c77fbe8b65a8</uuid>
+                    <name>TacticalRMM redis running</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.redis_running</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.services_running.redis</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>c00f655deab94770800d1fc59078473e</uuid>
+                            <expression>last(/TacticalRMM Health/tacticalrmm.redis_running,#1)=&quot;false&quot;</expression>
+                            <name>Redis not running</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>98c594925550466288543c6376de84e8</uuid>
+                    <name>TacticalRMM site_count</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.site_count</key>
+                    <delay>0</delay>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.site_count</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                    <triggers>
+                        <trigger>
+                            <uuid>97d097ea6d58454987ead02cb76e00f6</uuid>
+                            <expression>change(/TacticalRMM Health/tacticalrmm.site_count)&lt;&gt;0</expression>
+                            <name>Sites changed</name>
+                            <priority>INFO</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>89cb8eb1e0734f6c8f1d6fcc97da3e9c</uuid>
+                    <name>TacticalRMM version</name>
+                    <type>DEPENDENT</type>
+                    <key>tacticalrmm.version</key>
+                    <delay>0</delay>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.version</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>tacticaltmm.http</key>
+                    </master_item>
+                </item>
+                <item>
+                    <uuid>de008d9ae7f74242a7be9c41c53abe58</uuid>
+                    <name>TacticalRMM Health by Http Agent</name>
+                    <type>HTTP_AGENT</type>
+                    <key>tacticaltmm.http</key>
+                    <value_type>TEXT</value_type>
+                    <trends>0</trends>
+                    <url>{$API_URL}/core/status/</url>
+                    <follow_redirects>NO</follow_redirects>
+                    <post_type>JSON</post_type>
+                    <posts>{&quot;auth&quot;: &quot;{$API_TOKEN}&quot;}</posts>
+                    <headers>
+                        <header>
+                            <name>Content-type</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <request_method>POST</request_method>
+                    <tags>
+                        <tag>
+                            <tag>class</tag>
+                            <value>software</value>
+                        </tag>
+                        <tag>
+                            <tag>target</tag>
+                            <value>server</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>6a9cd2293acb491c9f733d6bf9a74fdd</uuid>
+                            <expression>nodata(/TacticalRMM Health/tacticaltmm.http,10m)=1</expression>
+                            <name>Server unreachable</name>
+                            <priority>DISASTER</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+            <tags>
+                <tag>
+                    <tag>class</tag>
+                    <value>software</value>
+                </tag>
+                <tag>
+                    <tag>target</tag>
+                    <value>server</value>
+                </tag>
+            </tags>
+            <macros>
+                <macro>
+                    <macro>{$API_TOKEN}</macro>
+                    <value>token</value>
+                    <description>insert token</description>
+                </macro>
+                <macro>
+                    <macro>{$API_URL}</macro>
+                    <value>https://api.&lt;rmm-server-domain&gt;</value>
+                    <description>insert url of tacticalrmm api server</description>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
